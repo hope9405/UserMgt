@@ -3,7 +3,7 @@ package kr.or.catdogfoot.usermgt;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
-// TODO ¸í·É¾î ¸¸µé¾î¼­ Ã³¸®ÇÒ ¼ö ÀÖ´ÂÁö Ã¼Å©
+// TODO ëª…ë ¹ì–´ ë§Œë“¤ì–´ì„œ ì²˜ë¦¬í•  ìˆ˜ ìˆëŠ”ì§€ ì²´í¬
 public class Main extends JavaPlugin {
 	@Override
 	public void onEnable() {}

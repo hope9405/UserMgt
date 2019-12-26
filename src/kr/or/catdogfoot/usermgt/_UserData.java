@@ -2,6 +2,6 @@ package kr.or.catdogfoot.usermgt;
 
 
 public interface _UserData{
-	public UserConfigData saveConfig(); // UserData¸¦ ÀúÀåÇÏ±â À§ÇÑ ÇÔ¼ö
-	public void loadConfig(UserConfigData data); // UserData¸¦ ºÒ·¯¿À±â À§ÇÑ ÇÔ¼ö
+	public UserConfigData saveConfig(); // UserDataë¥¼ ì €ìž¥í•˜ê¸° ìœ„í•œ í•¨ìˆ˜
+	public void loadConfig(UserConfigData data); // UserDataë¥¼ ë¶ˆëŸ¬ì˜¤ê¸° ìœ„í•œ í•¨ìˆ˜
 }

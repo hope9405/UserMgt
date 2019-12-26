@@ -15,8 +15,8 @@ public class UserMgt<UserData extends _UserData>{
 	private HashMap<String, UserList<UserData>> teamList = new HashMap<>();
 	protected HashMap<UUID, HashSet<UserList<UserData>>> allUserList = new HashMap<>();
 	
-	public UserMgt() {} // TODO test ¿ë Áö¿ì±â!!
-	// TODO OfflinePlayer¸¦ UUID´ëÃ¼ÇØ¼­ »ç¿ëÇÒ ¼ö ÀÖÀ» µí °ËÅä ÇÊ¿ä
+	public UserMgt() {} // TODO test ìš© ì§€ìš°ê¸°!!
+	// TODO OfflinePlayerë¥¼ UUIDëŒ€ì²´í•´ì„œ ì‚¬ìš©í•  ìˆ˜ ìˆì„ ë“¯ ê²€í†  í•„ìš”
 	public UserMgt(JavaPlugin plugin) {
 		this.plugin = plugin;
 		config = new UserConfig<>();
@@ -32,7 +32,7 @@ public class UserMgt<UserData extends _UserData>{
 	}
 	
 	public UserList<UserData> createTeam(String teamName) {
-		// ÀÌ¹Ì teamNameÀÇ ÆÀÀÌ ÀÖÀ¸¸é ±âÁ¸ÀÇ ÆÀÀ» ¹İÈ¯.
+		// ì´ë¯¸ teamNameì˜ íŒ€ì´ ìˆìœ¼ë©´ ê¸°ì¡´ì˜ íŒ€ì„ ë°˜í™˜.
 		if(teamList.containsKey(teamName)) {
 			return teamList.get(teamName);
 		}else {
@@ -48,23 +48,23 @@ public class UserMgt<UserData extends _UserData>{
 		return allUserList.containsKey(user);
 	}
 	
-	// ÆÀÀ» Á¦°Å ÇÕ´Ï´Ù.
+	// íŒ€ì„ ì œê±° í•©ë‹ˆë‹¤.
 	public void removeTeam(UserList<UserData> team) {
 		String teamName = team.getTeamName();
 		
 		for(Iterator<UUID> iter = allUserList.keySet().iterator() ; iter.hasNext();) {
 			UUID uuid = iter.next();
 			HashSet<UserList<UserData>> set = allUserList.get(uuid);
-			// Á¦°Å ÇÏ·Á´Â ÆÀ¿¡ µé¾î°¡ÀÖ°í,
+			// ì œê±° í•˜ë ¤ëŠ” íŒ€ì— ë“¤ì–´ê°€ìˆê³ ,
 			if(set.contains(team)) {
-				// µé¾î°¡ ÀÖ´Â ÆÀÀÌ 1°³º¸´Ù ÀûÀ¸¸é,
+				// ë“¤ì–´ê°€ ìˆëŠ” íŒ€ì´ 1ê°œë³´ë‹¤ ì ìœ¼ë©´,
 				if(set.size() <= 1) {
-					// ÅëÂ°·Î ³¯·Á¹ö¸²
+					// í†µì§¸ë¡œ ë‚ ë ¤ë²„ë¦¼
 					iter.remove();
 				}
-				// µé¾î°¡ ÀÖ´Â ÆÀÀÌ ¿©·¯°³¸é,
+				// ë“¤ì–´ê°€ ìˆëŠ” íŒ€ì´ ì—¬ëŸ¬ê°œë©´,
 				else {
-					// ±× ÆÀ¸¸ Á¦°Å
+					// ê·¸ íŒ€ë§Œ ì œê±°
 					set.remove(team);
 				}
 			}
@@ -77,23 +77,23 @@ public class UserMgt<UserData extends _UserData>{
 		for(Iterator<UUID> iter = allUserList.keySet().iterator() ; iter.hasNext();) {
 			UUID uuid = iter.next();
 			HashSet<UserList<UserData>> set = allUserList.get(uuid);
-			// Á¦°Å ÇÏ·Á´Â ÆÀ¿¡ µé¾î°¡ÀÖ°í,
+			// ì œê±° í•˜ë ¤ëŠ” íŒ€ì— ë“¤ì–´ê°€ìˆê³ ,
 			if(set.contains(team)) {
-				// µé¾î°¡ ÀÖ´Â ÆÀÀÌ 1°³º¸´Ù ÀûÀ¸¸é,
+				// ë“¤ì–´ê°€ ìˆëŠ” íŒ€ì´ 1ê°œë³´ë‹¤ ì ìœ¼ë©´,
 				if(set.size() <= 1) {
-					// ÅëÂ°·Î ³¯·Á¹ö¸²
+					// í†µì§¸ë¡œ ë‚ ë ¤ë²„ë¦¼
 					iter.remove();
 				}
-				// µé¾î°¡ ÀÖ´Â ÆÀÀÌ ¿©·¯°³¸é,
+				// ë“¤ì–´ê°€ ìˆëŠ” íŒ€ì´ ì—¬ëŸ¬ê°œë©´,
 				else {
-					// ±× ÆÀ¸¸ Á¦°Å
+					// ê·¸ íŒ€ë§Œ ì œê±°
 					set.remove(team);
 				}
 			}
 		}
 		teamList.remove(teamName);
 	}
-	// À¯Àú¸¦ Á¦°Å ÇÕ´Ï´Ù.
+	// ìœ ì €ë¥¼ ì œê±° í•©ë‹ˆë‹¤.
 	public void removeUser(UUID user) {
 		for(Iterator<UserList<UserData>> iter = allUserList.get(user).iterator() ; iter.hasNext() ; ) {
 			iter.next().list.remove(user);

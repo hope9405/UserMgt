@@ -56,7 +56,7 @@ public class UserConfig<UserData extends _UserData> {
 		File file = new File(plugin.getDataFolder(),File.separator);
 		File configFile = new File(file,File.separator+"UserMgt.yml");
 		
-		// UserMgt.ymlÀÌ ¾øÀ¸¸é ÇÔ¼ö Á¾·á
+		// UserMgt.ymlì´ ì—†ìœ¼ë©´ í•¨ìˆ˜ ì¢…ë£Œ
 		if(!configFile.exists()) return;
 		YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
 		
@@ -71,7 +71,7 @@ public class UserConfig<UserData extends _UserData> {
 			UserData userData = null;
 			
 			if(userClass != null) {
-				// À¯Àú µ¥ÀÌÅÍ°¡ ÀÖÀ» °æ¿ì °¡Á®¿È.
+				// ìœ ì € ë°ì´í„°ê°€ ìˆì„ ê²½ìš° ê°€ì ¸ì˜´.
 				try {
 					userData = userClass.getDeclaredConstructor().newInstance();
 					UserConfigData configData = new UserConfigData();

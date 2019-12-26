@@ -31,6 +31,7 @@ public class UserList<UserData extends _UserData> {
 	}
 	
 	public void putUser(UUID user) {
+		System.out.println("putUser");
 		// 무결성 유지를 위해 이미 존재하는 user는 data를 가져와서 넣음
 		if(userMgt.containsUser(user)) { // 이미 존재하면
 			UserData userData = userMgt.getUserData(user);

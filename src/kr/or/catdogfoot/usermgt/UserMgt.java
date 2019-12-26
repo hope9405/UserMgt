@@ -15,7 +15,6 @@ public class UserMgt<UserData extends _UserData>{
 	private HashMap<String, UserList<UserData>> teamList = new HashMap<>();
 	protected HashMap<UUID, HashSet<UserList<UserData>>> allUserList = new HashMap<>();
 	
-	public UserMgt() {} // TODO test 용 지우기!!
 	// TODO OfflinePlayer를 UUID대체해서 사용할 수 있을 듯 검토 필요
 	public UserMgt(JavaPlugin plugin) {
 		this.plugin = plugin;
@@ -111,7 +110,12 @@ public class UserMgt<UserData extends _UserData>{
 		return allUserList.keySet();
 	}
 	public UserData getUserData(UUID user) {
-		return (UserData) allUserList.get(user).iterator().next().getUser(user);
+		HashSet<UserList<UserData>> data = allUserList.get(user);
+		if(data == null) return null;
+		
+		UserList<UserData> team = data.iterator().next();
+		if(team == null) return null;
+		return team.getUser(user);
 	}
 	
 }

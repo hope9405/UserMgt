@@ -31,21 +31,17 @@ public class UserList<UserData extends _UserData> {
 	}
 	
 	public void putUser(UUID user) {
-		System.out.println("putUser");
-		// ¹«°á¼º À¯Áö¸¦ À§ÇØ ÀÌ¹Ì Á¸ÀçÇÏ´Â user´Â data¸¦ °¡Á®¿Í¼­ ³ÖÀ½
-		if(userMgt.containsUser(user)) { // ÀÌ¹Ì Á¸ÀçÇÏ¸é
+		if(userMgt.containsUser(user)) { 
 			UserData userData = userMgt.getUserData(user);
 			list.put(user, userData);
 		}else {
 			list.put(user,null);
 			userMgt.allUserList.put(user, new HashSet<>());
 		}
-		// allUserList¿¡ »õ·Î¿î ÆÀÀ» ³Ö¾î ÁÜ.
 		userMgt.allUserList.get(user).add(this);
 	}
 	public void putUser(UUID user, UserData data) {
-		// ¹«°á¼º À¯Áö¸¦ À§ÇØ ÀÌ¹Ì Á¸ÀçÇÏ´Â user´Â data¸¦ °¡Á®¿Í¼­ ³ÖÀ½
-		if(userMgt.containsUser(user)) { // ÀÌ¹Ì Á¸ÀçÇÏ¸é
+		if(userMgt.containsUser(user)) { 
 			UserData userData = userMgt.getUserData(user);
 			list.put(user, userData);
 		}else {
@@ -62,7 +58,6 @@ public class UserList<UserData extends _UserData> {
 		HashSet<UserList<UserData>> userList = userMgt.allUserList.get(user);
 		
 		userList.remove(this);
-		// ÀüÃ¼ À¯Àú ¸ñ·Ï¿¡¼­ ÀÌ ÆÀ ¹Û¿¡ µé¾îÀÖÁö ¾Ê´Ù¸é,
 		if(userList.size() == 0) {
 			userMgt.allUserList.remove(user);
 		}
@@ -74,7 +69,7 @@ public class UserList<UserData extends _UserData> {
 			removeUser(user);
 		}else {
 			try {
-				throw new Exception(this.teamName+"ÆÀ¿¡ user°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
+				throw new Exception(this.teamName+"ì— userê°€ ì—†ìŠµë‹ˆë‹¤.");
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
@@ -86,7 +81,7 @@ public class UserList<UserData extends _UserData> {
 			removeUser(user);
 		}else {
 			try {
-				throw new Exception(this.teamName+"ÆÀ¿¡ user°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
+				throw new Exception(this.teamName+"ì— userê°€ ì—†ìŠµë‹ˆë‹¤.");
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
@@ -98,7 +93,7 @@ public class UserList<UserData extends _UserData> {
 			userMgt.getTeam(teamName).putUser(user);
 		}else {
 			try {
-				throw new Exception(this.teamName+"ÆÀ¿¡ user°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
+				throw new Exception(this.teamName+"ì— userê°€ ì—†ìŠµë‹ˆë‹¤.");
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
@@ -109,7 +104,7 @@ public class UserList<UserData extends _UserData> {
 			userList.putUser(user);
 		}else {
 			try {
-				throw new Exception(this.teamName+"ÆÀ¿¡ user°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
+				throw new Exception(this.teamName+"ì— userê°€ ì—†ìŠµë‹ˆë‹¤.");
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
@@ -120,16 +115,11 @@ public class UserList<UserData extends _UserData> {
 		for(Iterator<UUID> iter = userMgt.allUserList.keySet().iterator() ; iter.hasNext();) {
 			UUID uuid = iter.next();
 			HashSet<UserList<UserData>> set = userMgt.allUserList.get(uuid);
-			// Á¦°Å ÇÏ·Á´Â ÆÀ¿¡ µé¾î°¡ÀÖ°í,
 			if(set.contains(this)) {
-				// µé¾î°¡ ÀÖ´Â ÆÀÀÌ 1°³º¸´Ù ÀûÀ¸¸é,
 				if(set.size() <= 1) {
-					// ÅëÂ°·Î ³¯·Á¹ö¸²
 					iter.remove();
 				}
-				// µé¾î°¡ ÀÖ´Â ÆÀÀÌ ¿©·¯°³¸é,
 				else {
-					// ±× ÆÀ¸¸ Á¦°Å
 					set.remove(this);
 				}
 			}

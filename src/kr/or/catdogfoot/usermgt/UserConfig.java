@@ -56,7 +56,6 @@ public class UserConfig<UserData extends _UserData> {
 		File file = new File(plugin.getDataFolder(),File.separator);
 		File configFile = new File(file,File.separator+"UserMgt.yml");
 		
-		// UserMgt.yml이 없으면 함수 종료
 		if(!configFile.exists()) return;
 		YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
 		
@@ -71,7 +70,6 @@ public class UserConfig<UserData extends _UserData> {
 			UserData userData = null;
 			
 			if(userClass != null) {
-				// 유저 데이터가 있을 경우 가져옴.
 				try {
 					userData = userClass.getDeclaredConstructor().newInstance();
 					UserConfigData configData = new UserConfigData();

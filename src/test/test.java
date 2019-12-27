@@ -13,7 +13,7 @@ public class test{
 	}
 	public static void main(String[] args){
 		System.out.println(test2.class.getDeclaredFields()[0]);
-		// ¸®ÇÃ·º¼ÇÀ¸·Î ÀÚµ¿È­ ½ÃÅ³¼ö ÀÖÀ» µí
+		// ë¦¬í”Œë ‰ì…˜ìœ¼ë¡œ ìë™í™”ì‹œí‚¬ ìˆ˜ ìˆì„ ë“¯
 		
 	}
 }

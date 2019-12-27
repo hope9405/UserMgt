@@ -10,12 +10,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class UserMgt<UserData extends _UserData>{
+public class UserMgt<T extends _UserData>{
 	private JavaPlugin plugin;
-	private UserConfig<UserData> config;
+	private UserConfig<T> config;
 	
-	private HashMap<String, UserList<UserData>> teamList = new HashMap<>();
-	protected HashMap<UUID, HashSet<UserList<UserData>>> allUserList = new HashMap<>();
+	private HashMap<String, UserList<T>> teamList = new HashMap<>();
+	protected HashMap<UUID, HashSet<UserList<T>>> allUserList = new HashMap<>();
 	
 	public UserMgt(JavaPlugin plugin) {
 		this.plugin = plugin;
@@ -24,18 +24,18 @@ public class UserMgt<UserData extends _UserData>{
 	public void loadConfig() {
 		config.load(plugin,this,null);
 	}
-	public void loadConfig(Class<UserData> userClass) {
+	public void loadConfig(Class<T> userClass) {
 		config.load(plugin,this,userClass);
 	}
 	public void saveConfig() {
 		config.save(plugin, this);
 	}
 	
-	public UserList<UserData> createTeam(String teamName) {
+	public UserList<T> createTeam(String teamName) {
 		if(teamList.containsKey(teamName)) {
 			return teamList.get(teamName);
 		}else {
-			UserList<UserData> userList = new UserList<>(this,teamName);
+			UserList<T> userList = new UserList<>(this,teamName);
 			teamList.put(teamName, userList);
 			return userList;
 		}
@@ -47,12 +47,12 @@ public class UserMgt<UserData extends _UserData>{
 		return allUserList.containsKey(user);
 	}
 	
-	public void removeTeam(UserList<UserData> team) {
+	public void removeTeam(UserList<T> team) {
 		String teamName = team.getTeamName();
 		
 		for(Iterator<UUID> iter = allUserList.keySet().iterator() ; iter.hasNext();) {
 			UUID uuid = iter.next();
-			HashSet<UserList<UserData>> set = allUserList.get(uuid);
+			HashSet<UserList<T>> set = allUserList.get(uuid);
 			if(set.contains(team)) {
 				if(set.size() <= 1) {
 					iter.remove();
@@ -65,11 +65,11 @@ public class UserMgt<UserData extends _UserData>{
 		teamList.remove(teamName);
 	}
 	public void removeTeam(String teamName) {
-		UserList<UserData> team = teamList.get(teamName);
+		UserList<T> team = teamList.get(teamName);
 		
 		for(Iterator<UUID> iter = allUserList.keySet().iterator() ; iter.hasNext();) {
 			UUID uuid = iter.next();
-			HashSet<UserList<UserData>> set = allUserList.get(uuid);
+			HashSet<UserList<T>> set = allUserList.get(uuid);
 			if(set.contains(team)) {
 				if(set.size() <= 1) {
 					iter.remove();
@@ -82,13 +82,13 @@ public class UserMgt<UserData extends _UserData>{
 		teamList.remove(teamName);
 	}
 	public void removeUser(UUID user) {
-		for(Iterator<UserList<UserData>> iter = allUserList.get(user).iterator() ; iter.hasNext() ; ) {
+		for(Iterator<UserList<T>> iter = allUserList.get(user).iterator() ; iter.hasNext() ; ) {
 			iter.next().list.remove(user);
 		}
 		allUserList.remove(user);
 	}
 	
-	public UserList<UserData> getTeam(String teamName) {
+	public UserList<T> getTeam(String teamName) {
 		return teamList.get(teamName);
 	}
 	public Set<String> getTeamList() {
@@ -97,11 +97,11 @@ public class UserMgt<UserData extends _UserData>{
 	public Set<UUID> getAllUser(){
 		return allUserList.keySet();
 	}
-	public UserData getUserData(UUID user) {
-		HashSet<UserList<UserData>> data = allUserList.get(user);
+	public T getUserData(UUID user) {
+		HashSet<UserList<T>> data = allUserList.get(user);
 		if(data == null) return null;
 		
-		UserList<UserData> team = data.iterator().next();
+		UserList<T> team = data.iterator().next();
 		if(team == null) return null;
 		return team.getUser(user);
 	}

@@ -14,25 +14,25 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class UserConfig<UserData extends _UserData> {
-	public void save(JavaPlugin plugin, UserMgt<UserData> userMgt) {
+public class UserConfig<T extends _UserData> {
+	public void save(JavaPlugin plugin, UserMgt<T> userMgt) {
 		File file = new File(plugin.getDataFolder(),File.separator); // File.separator: window = \\, Linux = /
 		File configFile = new File(file,File.separator+"UserMgt.yml");
 		YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
 		
 		config.createSection("AllUserList");
 		
-		for(Iterator<Entry<UUID, HashSet<UserList<UserData>>>> iter = userMgt.allUserList.entrySet().iterator(); iter.hasNext();) {
-			Entry<UUID, HashSet<UserList<UserData>>> data = iter.next();
+		for(Iterator<Entry<UUID, HashSet<UserList<T>>>> iter = userMgt.allUserList.entrySet().iterator(); iter.hasNext();) {
+			Entry<UUID, HashSet<UserList<T>>> data = iter.next();
 			UUID uuid = data.getKey();
-			HashSet<UserList<UserData>> set = data.getValue();
+			HashSet<UserList<T>> set = data.getValue();
 			
 			ConfigurationSection section = config.createSection("AllUserList."+uuid);
 			
 			ArrayList<String> arr = new ArrayList<String>();
 		
-			for(Iterator<UserList<UserData>> iterList = set.iterator() ; iterList.hasNext();) {
-				UserList<UserData> userList = iterList.next();
+			for(Iterator<UserList<T>> iterList = set.iterator() ; iterList.hasNext();) {
+				UserList<T> userList = iterList.next();
 				arr.add(userList.getTeamName());
 			}
 			section.set("team", arr);
@@ -52,7 +52,7 @@ public class UserConfig<UserData extends _UserData> {
 			ex.printStackTrace();
 		}
 	}
-	public void load(JavaPlugin plugin, UserMgt<UserData> userMgt, Class<UserData> userClass){
+	public void load(JavaPlugin plugin, UserMgt<T> userMgt, Class<T> userClass){
 		File file = new File(plugin.getDataFolder(),File.separator);
 		File configFile = new File(file,File.separator+"UserMgt.yml");
 		
@@ -67,7 +67,7 @@ public class UserConfig<UserData extends _UserData> {
 			ConfigurationSection user = section.getConfigurationSection(uuidStr);
 			UUID uuid = UUID.fromString(uuidStr);
 			
-			UserData userData = null;
+			T userData = null;
 			
 			if(userClass != null) {
 				try {

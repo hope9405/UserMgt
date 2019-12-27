@@ -6,12 +6,12 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.UUID;
 
-public class UserList<UserData extends _UserData> {
-	private UserMgt<UserData> userMgt;
-	HashMap<UUID, UserData> list = new HashMap<>();
+public class UserList<T extends _UserData> {
+	private UserMgt<T> userMgt;
+	HashMap<UUID, T> list = new HashMap<>();
 	private String teamName;
 	
-	UserList(UserMgt<UserData> userMgt, String teamName){
+	UserList(UserMgt<T> userMgt, String teamName){
 		this.userMgt = userMgt;
 		this.teamName = teamName;
 	}
@@ -20,7 +20,7 @@ public class UserList<UserData extends _UserData> {
 		return list.size();
 	}
 	
-	public UserData getUser(UUID user) {
+	public T getUser(UUID user) {
 		return list.get(user);
 	}
 	public Set<UUID> getUserList() {
@@ -32,7 +32,7 @@ public class UserList<UserData extends _UserData> {
 	
 	public void putUser(UUID user) {
 		if(userMgt.containsUser(user)) { 
-			UserData userData = userMgt.getUserData(user);
+			T userData = userMgt.getUserData(user);
 			list.put(user, userData);
 		}else {
 			list.put(user,null);
@@ -40,9 +40,9 @@ public class UserList<UserData extends _UserData> {
 		}
 		userMgt.allUserList.get(user).add(this);
 	}
-	public void putUser(UUID user, UserData data) {
+	public void putUser(UUID user, T data) {
 		if(userMgt.containsUser(user)) { 
-			UserData userData = userMgt.getUserData(user);
+			T userData = userMgt.getUserData(user);
 			list.put(user, userData);
 		}else {
 			list.put(user, data);
@@ -55,7 +55,7 @@ public class UserList<UserData extends _UserData> {
 		return list.containsKey(user);
 	}
 	public void removeUser(UUID user) {
-		HashSet<UserList<UserData>> userList = userMgt.allUserList.get(user);
+		HashSet<UserList<T>> userList = userMgt.allUserList.get(user);
 		
 		userList.remove(this);
 		if(userList.size() == 0) {
@@ -75,7 +75,7 @@ public class UserList<UserData extends _UserData> {
 			}
 		}
 	}
-	public void moveTeam(UserList<UserData> userList, UUID user) {
+	public void moveTeam(UserList<T> userList, UUID user) {
 		if(list.containsKey(user)) {
 			userList.putUser(user);
 			removeUser(user);
@@ -99,7 +99,7 @@ public class UserList<UserData extends _UserData> {
 			}
 		}
 	}
-	public void copyTeam(UserList<UserData> userList, UUID user) {
+	public void copyTeam(UserList<T> userList, UUID user) {
 		if(list.containsKey(user)) {
 			userList.putUser(user);
 		}else {
@@ -114,7 +114,7 @@ public class UserList<UserData extends _UserData> {
 	public void clear() {
 		for(Iterator<UUID> iter = userMgt.allUserList.keySet().iterator() ; iter.hasNext();) {
 			UUID uuid = iter.next();
-			HashSet<UserList<UserData>> set = userMgt.allUserList.get(uuid);
+			HashSet<UserList<T>> set = userMgt.allUserList.get(uuid);
 			if(set.contains(this)) {
 				if(set.size() <= 1) {
 					iter.remove();

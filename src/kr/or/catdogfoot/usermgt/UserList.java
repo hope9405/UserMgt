@@ -6,6 +6,9 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+
 public class UserList<UserData extends _UserData> {
 	private UserMgt<UserData> userMgt;
 	HashMap<UUID, UserData> list = new HashMap<>();
@@ -125,5 +128,14 @@ public class UserList<UserData extends _UserData> {
 			}
 		}
 		list.clear();
+	}
+	
+	public void sendMessage(String message) {
+		for( UUID u : list.keySet()) {
+			Player p = (Player)Bukkit.getOfflinePlayer(u);
+			if(p!=null && p.isOnline()) {
+				p.sendMessage(message);
+			}
+		}
 	}
 }

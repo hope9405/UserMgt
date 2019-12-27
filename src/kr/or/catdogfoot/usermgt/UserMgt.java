@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class UserMgt<UserData extends _UserData>{
@@ -102,6 +104,15 @@ public class UserMgt<UserData extends _UserData>{
 		UserList<UserData> team = data.iterator().next();
 		if(team == null) return null;
 		return team.getUser(user);
+	}
+	
+	public void sendMessage(String message) {
+		for( UUID u : allUserList.keySet()) {
+			Player p = (Player)Bukkit.getOfflinePlayer(u);
+			if(p!=null && p.isOnline()) {
+				p.sendMessage(message);
+			}
+		}
 	}
 	
 }
